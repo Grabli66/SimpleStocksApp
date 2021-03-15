@@ -1,0 +1,21 @@
+name: simple_stocks_app
+version: 0.1.0
+
+authors:
+  - Grabli66 <grabli66@gmail.com>
+
+dependencies:
+  crest:
+    github: mamantoha/crest
+
+  kemal:
+    github: kemalcr/kemal
+    branch: master  
+
+targets:
+  simple_stocks_app:
+    main: src/simple_stocks_app.cr
+
+crystal: 0.36.1
+
+license: MIT
