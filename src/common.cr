@@ -4,6 +4,22 @@ module SimpleStocksApp
     Minute
     Hour
     Day
+    Month
+
+    def self.from_s(v : String) : IntervalType
+      case v
+      when "minute"
+        return IntervalType::Minute
+      when "hour"
+        return IntervalType::Hour
+      when "day"
+        return IntervalType::Day
+      when "month"
+        return IntervalType::Month
+      end
+
+      raise Exception.new("Unknown IntervalType")
+    end
   end
 
   # Данные с датой

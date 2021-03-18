@@ -18,25 +18,35 @@ module SimpleStocksApp
     usd = 1.0 / json["rates"]["USD"].to_s.to_f
 
     next {
-      "USD": usd,
+      "usd": usd,
     }.to_json
   end
 
-  # Возвращает значение закрытия последней часовой свечи
-  get "/moex_last_hour" do |env|
+  # Возвращает значение закрытия последней свечи
+  # ticker - название бумаги
+  # interval - тип интервала: час, день, месяц
+  # Пример: /moex_last_value?ticker=GAZP&interval=hour
+  get "/moex_last_value" do |env|
     env.response.content_type = "application/json"
-    ticker = env.params.query["ticker"]
+    ticker = env.params.query["ticker"]?
+    intervalStr = env.params.query["interval"]?
+    if (ticker == nil) || (intervalStr == nil)
+      halt env, status_code: 400, response: "Bad request"
+    end
+
+    interval = IntervalType.from_s(intervalStr.not_nil!)
 
     end_date = Time.local
     start_date = end_date - 7.days
 
-    candles = MoexApi.instance.get_chart_for_interval(ticker, MoexMarketType::Shares, IntervalType::Hour, start_date, end_date)
+    candles = MoexApi.instance.get_chart_for_interval(ticker.not_nil!, MoexMarketType::Shares, interval, start_date, end_date)
     candles.sort { |a, b| a.date <=> b.date }
 
     last_candle = candles.last
 
     {
       "last": last_candle.close,
+      "date": last_candle.date
     }.to_json
   end
 
