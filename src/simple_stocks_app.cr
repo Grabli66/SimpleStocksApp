@@ -41,8 +41,14 @@ module SimpleStocksApp
 
     candles = MoexApi.instance.get_chart_for_interval(ticker.not_nil!, MoexMarketType::Shares, interval, start_date, end_date)
     candles.sort { |a, b| a.date <=> b.date }
-
+    
     last_candle = candles.last
+    case interval
+    when IntervalType::Day
+      if candles.size > 1
+        last_candle = candles[candles.size - 2]
+      end
+    end
 
     {
       "last": last_candle.close,
