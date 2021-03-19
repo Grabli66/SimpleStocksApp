@@ -1,6 +1,7 @@
 module SimpleStocksApp
   # Тип интервала
   enum IntervalType
+    Now
     Minute
     Hour
     Day
@@ -8,6 +9,8 @@ module SimpleStocksApp
 
     def self.from_s(v : String) : IntervalType
       case v
+      when "now"
+        return IntervalType::Now
       when "minute"
         return IntervalType::Minute
       when "hour"
@@ -86,6 +89,8 @@ struct Time
   # Выпавнивает на границу интервала
   def align(interval : SimpleStocksApp::IntervalType, at_end = false)
     case interval
+    when SimpleStocksApp::IntervalType::Now
+      return self
     when SimpleStocksApp::IntervalType::Minute
       return at_end ? self.at_end_of_minute : self.at_beginning_of_minute
     when SimpleStocksApp::IntervalType::Hour
