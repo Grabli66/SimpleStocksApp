@@ -39,6 +39,10 @@ module SimpleStocksApp
     end_date = Time.local
     start_date = end_date - 7.days
 
+    if interval == IntervalType::Month
+      start_date = end_date - 180.days
+    end
+
     requestInterval = interval
     case interval
     when IntervalType::Now
@@ -50,14 +54,14 @@ module SimpleStocksApp
     candles.each do |x|
       p x
     end
-    
+
     last_candle = candles.last
     case interval
     when IntervalType::Now
       if candles.size > 0
         last_candle = candles[candles.size - 1]
       end
-    when IntervalType::Day
+    when IntervalType::Day, IntervalType::Month
       if candles.size > 1
         last_candle = candles[candles.size - 2]
       end
@@ -65,7 +69,7 @@ module SimpleStocksApp
 
     {
       "last": last_candle.close,
-      "date": last_candle.date
+      "date": last_candle.date,
     }.to_json
   end
 

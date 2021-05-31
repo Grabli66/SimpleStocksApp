@@ -12,6 +12,8 @@ module SimpleStocksApp
         return "60"
       when IntervalType::Day
         return "24"
+      when IntervalType::Month
+        return "31"
       end
       raise Exception.new("Unknown interval")
     end
@@ -36,9 +38,6 @@ module SimpleStocksApp
 
   # API для moex
   class MoexApi
-    # Тикер ФПР на московской бирже
-    FIPO_TICKER = "RU000A101NK4"
-
     @@instance = MoexApi.new
 
     def self.instance
@@ -79,7 +78,7 @@ module SimpleStocksApp
         
         date = Time.parse(x[6].to_s, "%Y-%m-%d %H:%M:%S", Time::Location::UTC)
         CandleData.new(
-          interval: IntervalType::Day,
+          interval: interval,
           date: date,
           open: open,
           close: close,
