@@ -1,12 +1,16 @@
 version: 2.0
 shards:
+  backtracer:
+    git: https://github.com/sija/backtracer.cr.git
+    version: 1.2.1
+
   crest:
     git: https://github.com/mamantoha/crest.git
-    version: 0.26.7
+    version: 0.27.0
 
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
-    version: 0.1.4
+    version: 0.2.0
 
   http-client-digest_auth:
     git: https://github.com/mamantoha/http-client-digest_auth.git
@@ -18,13 +22,13 @@ shards:
 
   kemal:
     git: https://github.com/kemalcr/kemal.git
-    version: 0.27.0+git.commit.2d46beea5debefbb836a7e148a8e24452608471b
+    version: 1.0.0+git.commit.218be2422172d330feb62c6a8abc7df5402fdb84
 
   kilt:
     git: https://github.com/jeromegn/kilt.git
-    version: 0.4.0
+    version: 0.6.1
 
   radix:
     git: https://github.com/luislavena/radix.git
-    version: 0.4.0
+    version: 0.4.1
 
